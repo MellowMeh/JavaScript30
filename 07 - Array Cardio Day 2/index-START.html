@@ -25,17 +25,48 @@
       { text: 'Nice Nice Nice!', id: 542328 }
     ];
 
-    // Some and Every Checks
-    // Array.prototype.some() // is at least one person 19 or older?
-    // Array.prototype.every() // is everyone 19 or older?
+// Some and Every Checks
 
-    // Array.prototype.find()
-    // Find is like filter, but instead returns just the one you are looking for
-    // find the comment with the ID of 823423
+  // Array.prototype.some() // is at least one person 19 or older
+    // Array method .some() returns a boolean by default, hence why we do not need to specify return true;
+    //This is the shortest way to write the code, you could also make the currentYear a variable like in the isEveryAdult example below
+    const isAdult = people.some(person => {return ((new Date()).getFullYear()) - person.year >= 19;});
+    console.table(isAdult);
 
-    // Array.prototype.findIndex()
-    // Find the comment with this ID
-    // delete the comment with the ID of 823423
+  // Array.prototype.every() // is everyone 19 or older?
+  // Array method .every() returns a boolean by default, hence why we do not need to specify return true;
+    const isEveryAdult = people.every(person => {
+      const currentYear = (new Date()).getFullYear();
+      return currentYear - person.year >= 19;
+    });
+    console.table(isEveryAdult);
+
+// Array.prototype.find()
+  // Find is like filter, but instead returns just the one you are looking for
+  // find the comment with the ID of 823423
+    const returnSpecificComment = comments.find((comment) => comment.id === 823423);
+    console.log(returnSpecificComment);
+
+// Array.prototype.findIndex()
+  // Find the comment with this ID
+  // delete the comment with the ID of 823423
+  
+  //returns the index of the comment we want to delete
+  const index = comments.findIndex((comment) => comment.id === 823423);
+
+            //deletes 1 element starting at the index position from the original array (does not make a new array)
+            comments.splice(index, 1);
+            console.table(comments);
+            
+            //OR
+
+            //create a new array that excludes the comment we want to delete (makes a new array excluding index)
+            const newComments = [
+              ...comments.slice(0, index),
+              ...comments.slice(index + 1), //if no second parameter is defined, it slices until the end of the array
+            ]
+            console.table(newComments);
+
 
   </script>
 </body>
