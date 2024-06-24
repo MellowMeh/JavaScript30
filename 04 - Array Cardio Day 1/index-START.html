@@ -38,28 +38,130 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteen = inventors.filter(inventor => (inventor.year >= 1500 && inventor.year < 1600));
+    /* These two blocks of code do the same thing. One does it all inline, the other is a little longer. The top one works because object methods return a boolean true/false by default
+      const fifteen = inventors.filter((inventor) => {
+        if(inventor.year >= 1500 && inventor.year < 1600) {
+          return true; //keep it!
+        }
+      });
+    */
+
+
+    console.table(fifteen);
+
+
+
+
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const fullNames = inventors.map(inventor => inventor.first + " " + inventor.last);
+    //could also do const fullNames = inventors.map(inventor => '${inventor.first}' '${inventor.last}')
+    console.table(fullNames);
+    
+
+
+
+
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    //This code is shorter. This uses an implicit return and a ternary operator (in lieu of an if else statement)
+    const ordered = inventors.sort((a,b) => a.year > b.year ? 1: -1);
+
+    /* This code is long, but does the same thing. The return values indicate to the sort method to shift an element up or down. This is what does the sorting into numerical order.
+    const ordered = inventors.sort(function(a, b) {
+      if (a.year > b. year) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    */
+
+    console.table(ordered);
+
+
+
+
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    //the reduce method accepts 1st argument of a function and second argument of a default value to start at. If no default value is selected, then your result will be undefined
+    const totalYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0);
+
+    console.table(totalYears);
+
+
+
+
 
     // 5. Sort the inventors by years lived
+    //Get number of years lived for two guys. If the lastGuy lived longer, move him down the list. Compare all until they are all properly sorted.
+    const oldest = inventors.sort((a, b) => {
+      const lastGuy = a.passed - a.year;
+      const nextGuy = b.passed - b.year;
+      return lastGuy > nextGuy ? -1: 1;
+      /* the ternary operator takes the place of an if else statement
+      if (lastGuy > nextGuy) {
+        return -1;
+      } else {
+        return 1;
+      }
+      */
+    });
+
+    console.table(oldest);
+
+
+
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    //Note this code has to be copy-pasted into the webpage DOM in order to return results, because this HTMl is not linked to the webpage in anyway
+      
+    /*
+      const webpageContainer = document.querySelector('.mw-category-generated');
+      const streetNames = Array.from(webpageContainer.querySelectorAll('a'));
+      const streetNamesArray = streetNames
+        .map(link => link.textContent)
+        .filter(streetName => streetName.includes('de'));
+
+      console.table(streetNamesArray);
+      */
+
+
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    let alphabetizedNames = people.sort((a, b) => {
+      return a < b ? -1: 1;
+    })
+
+    console.table(alphabetizedNames)
+   
+
+
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    let studentTransportationMethod = data.reduce((obj, item) => {
+      if(!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {});
+
+    console.table(studentTransportationMethod);
+
 
   </script>
 </body>
